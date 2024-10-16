@@ -1,0 +1,19 @@
+.preloader {
+    position: fixed;           /* Fixes the position of the preloader */
+    top: 0;                   /* Aligns it to the top */
+    left: 0;                  /* Aligns it to the left */
+    width: 100vw;             /* Full width of the viewport */
+    height: 100vh;            /* Full height of the viewport */
+    background-color: rgba(255, 255, 255, 0.4); /* Slightly transparent white background */
+    display: flex;            /* Enables flexbox */
+    justify-content: center;  /* Centers content horizontally */
+    align-items: center;      /* Centers content vertically */
+    z-index: 9999;            /* Ensures it appears on top of all other elements */
+  }
+  
+
+  .animation-container {
+    width: 150px;  /* Set the desired width */
+    height: 150px; /* Set the desired height */
+    overflow: hidden; /* Ensures any overflow is hidden */
+  }

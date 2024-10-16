@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ride Listings</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f7f9;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .sort-by {
+            margin-bottom: 20px;
+        }
+
+        .sort-by h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .sort-by label {
+            display: block;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+
+        .sort-by input {
+            margin-right: 10px;
+        }
+
+        .rides {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .ride-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .ride-card .ride-info {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .ride-time {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ride-time span {
+            font-size: 16px;
+        }
+
+        .driver-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .driver-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #ddd;
+        }
+
+        .driver-info .name {
+            font-weight: bold;
+        }
+
+        .ride-price {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .ride-details {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .ride-details img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .ride-options {
+            margin-top: 20px;
+        }
+
+        .ride-options label {
+            font-size: 14px;
+            display: block;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Tomorrow</h2>
+        <p>Delhi Airport (DEL), New Delhi, Delhi, India → Kanpur, Uttar Pradesh, India: 6 rides available</p>
+        
+        <div class="sort-by">
+            <h3>Sort by</h3>
+            <label><input type="radio" name="sort" checked> Earliest departure</label>
+            <label><input type="radio" name="sort"> Lowest price</label>
+            <label><input type="radio" name="sort"> Close to departure point</label>
+            <label><input type="radio" name="sort"> Close to arrival point</label>
+            <label><input type="radio" name="sort"> Shortest ride</label>
+        </div>
+
+        <div class="rides">
+            <!-- Ride 1 -->
+            <div class="ride-card">
+                <div class="ride-info">
+                    <div class="ride-time">
+                        <span>04:00</span>
+                        <span>Noida</span>
+                        <span>→</span>
+                        <span>10:40</span>
+                        <span>Kanpur</span>
+                    </div>
+                    <div class="driver-info">
+                        <img src="https://via.placeholder.com/40" alt="Vivek">
+                        <span class="name">Vivek</span>
+                        <span>⭐ 5.0</span>
+                    </div>
+                    <div class="ride-details">
+                        <img src="https://via.placeholder.com/20" alt="Seats"> Max. 2 in the back
+                    </div>
+                </div>
+                <div class="ride-price">₹1,000.00</div>
+            </div>
+
+            <!-- Ride 2 -->
+            <div class="ride-card">
+                <div class="ride-info">
+                    <div class="ride-time">
+                        <span>06:00</span>
+                        <span>New Delhi</span>
+                        <span>→</span>
+                        <span>12:30</span>
+                        <span>Kanpur</span>
+                    </div>
+                    <div class="driver-info">
+                        <img src="https://via.placeholder.com/40" alt="Alok">
+                        <span class="name">Alok</span>
+                        <span>⭐ 4.9</span>
+                    </div>
+                    <div class="ride-details">
+                        <img src="https://via.placeholder.com/20" alt="Seats"> Instant Booking
+                        <img src="https://via.placeholder.com/20" alt="Seats"> Max. 2 in the back
+                    </div>
+                </div>
+                <div class="ride-price">₹1,050.00</div>
+            </div>
+        </div>
+
+        <div class="ride-options">
+            <label><input type="checkbox"> Before 06:00</label>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,264 @@
+/* .card-header{
+    background-color: #007bff;
+    color: #070707;
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid #dee2e6;
+    font-size: 1.25rem;
+}
+.left-side{
+    color: ;
+}
+.left-side .templatemo-blue-button{
+  width: 100px;
+}
+.left-side-t .form-group{
+    display: flex;
+    gap: 20px; 
+}
+.left-side-t .label{
+    color:  black;
+}
+ .card-header {
+    background-color: #007bff;
+    color: #000000;
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid #dee2e6;
+    font-size: 1.25rem;
+}
+
+.left-side .card-body {
+    padding: 1.25rem;
+}
+
+.left-side .card-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.left-side .card-text {
+    margin-bottom: 1.25rem;
+    line-height: 1.5;
+    color: black;
+}
+.left-side .row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.left-side .column {
+    flex: 1;
+    text-wrap: nowrap;
+    padding: 0 0.9rem;
+}
+
+.left-side  .label {
+    font-weight: bold;
+}
+
+.left-side  .value {
+    margin-left: 0.5rem;
+}
+
+.left-side .bold {
+    font-weight: bold;
+}  */
+
+
+/* * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f6f8fa;
+    color: #333;
+} */
+
+.container-t {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    display: flex;
+    margin-top: -100px;
+}
+
+/* Sidebar / Filter Section */
+.filter-section-t {
+    flex: 1;
+    background-color: white;
+    padding: 20px;
+    max-width: 350px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-right: 20px;
+}
+
+.filter-section-t h3 {
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: #333;
+}
+
+.filter-section-t div {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.filter-section-t input[type="radio"],
+.filter-section-t input[type="checkbox"] {
+    margin-right: 10px;
+    transform: scale(1.2);
+}
+
+.filter-section-t label {
+    font-size: 16px;
+    color: #333;
+}
+
+.filter-icons-t {
+    margin-left: 10px;
+    color: #888;
+}
+
+/* Ride Section */
+.ride-section-t {
+    flex: 2;
+}
+
+.ride-section-t h2 {
+    font-size: 22px;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.ride-section-t p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* Ride Card */
+.ride-card-t {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+}
+
+.ride-info-t {
+    flex: 3;
+}
+
+.time-t {
+    display: flex;
+    align-items: center;
+    color: #888;
+}
+
+.time-t span {
+    margin: 0 10px;
+    font-size: 14px;
+}
+
+.departure-arrival-t {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.route-info-t {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    color: #888;
+}
+
+.route-info-t span {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-color: #f1f1f1;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+/* Driver Section */
+.driver-section-t {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    justify-content: flex-start;
+}
+
+.avatar-t {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.driver-info-t {
+    margin-right: 30px;
+}
+
+.driver-info-t p {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.driver-info-t span {
+    font-size: 14px;
+    color: #888;
+    display: flex;
+    align-items: center;
+}
+
+.rating-t {
+    display: inline-block;
+    background-color: #ffc107;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    margin-left: 8px;
+}
+
+/* Price Section */
+.price-t {
+    font-size: 20px;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.seat-info-t {
+    color: #888;
+    font-size: 14px;
+}
+
+/* Extra Icons */
+.icon-t {
+    margin-right: 5px;
+}
+
+.clear-all-t {
+    color: #007bff;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.clear-all-t:hover {
+    text-decoration: underline;
+}
+
+.departure-time-t label {
+    font-weight: bold;
+    font-size: 16px;
+}

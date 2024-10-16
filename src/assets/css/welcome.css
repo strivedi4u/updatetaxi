@@ -1,0 +1,73 @@
+/* CSS reset to remove browser default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif; /* Use Poppins font from Google Fonts */
+}
+
+
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    text-align: center;
+    color: white;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 300; /* Light font-weight for the subtitle */
+    margin-bottom: 1rem;
+}
+
+.text2 {
+    font-size: 3rem;
+    font-weight: 600; /* Bold font-weight for the main title */
+    margin-bottom: 2rem;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.btn {
+    text-decoration: none;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    color: white;
+    transition: background 0.3s ease;
+}
+
+.learn-more {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid white;
+}
+
+.learn-more:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.register-now {
+    background-color: rgb(249, 81, 81);
+}
+
+.register-now:hover {
+    background-color: tomato;
+}

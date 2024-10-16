@@ -1,0 +1,250 @@
+/* * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+} */
+
+  
+
+  .animation-container-form {
+    /* padding-top: 50px; */
+    /* margin-top: 20px; */
+   /* Set the desired width */
+ /* size: 500px; */
+ height: 400px;
+margin-top: 20px;
+ /* Ensures any overflow is hidden */
+          /* Full height of the viewport */
+ /* Slightly transparent white background */
+           /* Enables flexbox */
+ justify-content: center;  /* Centers content horizontally */
+ align-items: center;   
+  }
+.section-2 {
+    display: none;
+}
+.ani{
+padding-top: 60px;
+}
+/* .show {
+    display: block !important;
+} */
+
+input:read-only {
+    background-color: #ddd;
+}
+
+.title-form {
+    display: flex;
+    /* Use flexbox */
+    justify-content: center;
+    /* Center horizontally */
+    align-items: center;
+    /* Center vertically */
+    font-size: 12px;
+    margin: -20px -20px 0 -20px;
+    padding: 0;
+    /* padding: 10px 0 0 0; */
+    background-color: #ffffff;
+    /* F6EB61 */
+    /* height: 100vh;   */
+}
+
+.span-form {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    width: 50%;
+    /* background-color: red; */
+
+    /* Use flexbox */
+    justify-content: center;
+    /* Center horizontally */
+    align-items: center;
+    /* Center vertically */
+}
+
+.span1 {
+    background-color: #F6EB61;
+    cursor: pointer;
+    /* 36d039; */
+    width: 33%;
+    height: 40px;
+    display: flex;
+    /* Use flexbox */
+    justify-content: center;
+    /* Center horizontally */
+    align-items: center;
+}
+
+.span2 {
+    background-color: #ffffff;
+    cursor: pointer;
+    width: 34%;
+    display: flex;
+    height: 40px;
+    /* Use flexbox */
+    justify-content: center;
+    /* Center horizontally */
+    align-items: center;
+}
+
+.span3 {
+    background-color: #ffffff;
+    cursor: pointer;
+    width: 33%;
+    display: flex;
+    /* Use flexbox */
+    justify-content: center;
+    height: 40px;
+    /* Center horizontally */
+    align-items: center;
+}
+.dropdown-toggle{
+    display: flex;
+}
+
+.expense-form {
+    /* font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; */
+    /* ----------- */
+    margin-top: -100px;
+    background-color: rgb(251, 246, 246, 0.7);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 1200px;
+    max-width: 100%;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.passenger {
+    background-color: #28a745;
+}
+
+.left-side,
+.right-side {
+    width: 48%;
+}
+
+.upload-section {
+    border: 2px dashed #ccc;
+    text-align: center;
+    padding: 40px;
+    border-radius: 8px;
+    position: relative;
+    background-color: #f7f7f7;
+}
+
+.upload-section img {
+    width: 60px;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+.upload-section p {
+    font-size: 14px;
+    color: #666;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.file-label {
+    display: block;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.file-info {
+    font-size: 12px;
+    color: #999;
+    margin-top: 10px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group-t {
+  
+    margin-bottom: 15px;
+    width: 265px;
+
+}
+
+.form-test {
+    display: flex;
+    justify-content: space-between;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #333;
+}
+
+input,
+select {
+    /* width: 100%; */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+}
+
+.input-t,
+.select-t {
+    width: 100%;
+}
+
+.button-group button {
+    width: 48%;
+    padding: 10px;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button#successButton {
+    background-color: #28a745;
+}
+
+button#addButton {
+    background-color: #3676d0;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+button:focus {
+    outline: none;
+}

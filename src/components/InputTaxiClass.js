@@ -29,7 +29,7 @@ import { getVendor } from "../apis/GetVendor";
 import { getModel } from "../apis/GetModel";
 import { getModelClass } from "../apis/GetModelClass";
 
-const InputModel = () => {
+const InputTaxiClass = () => {
   const [submitted, setSubmitted] = useState(false);
   const [vendorData, setVendorData] = useState([]);
   const [vendorId1, setVendorId1] = useState();
@@ -223,7 +223,7 @@ const InputModel = () => {
               letterSpacing: "1px",
             }}
           >
-            New Taxi Model Details Input 
+            New Taxi Class Details Input 
           </Typography>
 
           <Formik
@@ -436,7 +436,7 @@ const App = () => {
                 height: "100%",
               }}
             >
-              <InputModel />
+              <InputTaxiClass />
             </Box>
           </Grid>
         </Grid>

@@ -7,44 +7,39 @@ import '../assets/css/profile.css';
 import '../assets/css/login.css';
 import Navbar from '../components/Navbar';
 import UserProfile from '../components/UserProfile';
+import Preloader from '../components/Preloader';
+import { Login } from '../apis/Login';
 
-function TestLogin() {
-    const API_KEY = process.env.REACT_X_API_KEY;
-    const URL = process.env.REACT_APP_API_URL;
+function TestLogin({ setUserName }) {
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    // Initialize the state with the default values for controlled inputs
-    var [UserName, setUserName] = useState('598801');
-    var [UserPassword, setUserPassword] = useState('Wh@t!5Th1s?');
-    const API = URL + '/login';
+    var [loginId, setLoginId] = useState();
+    var [password, setPassword] = useState();
 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
-        let encryptUserName = encryptData(UserName);
-        let encryptUserPassword = encryptData(UserPassword);
-
-        // Make the API request using axios
-        axios.post(API, {
-            UserName: encryptUserName,
-            Password: encryptUserPassword
-        }, {
-            headers: {
-                "x-api-key": API_KEY
+        try {
+            setLoading(true);
+            const login = await Login(loginId, password);
+            console.log("login ", login);
+            localStorage.setItem('token', login);
+            localStorage.setItem('UserName', loginId);
+            if (login != null) {
+                console.log("login HI");
+                setUserName(loginId);
+               
+                navigate('/');
+                swal("Good job!", "Successfully saved", "success");
+            } else {
+                swal("Unfortunately!", "Unsuccessfully saved", "error");
             }
-        })
-            .then((response) => {
-                if (response.status === 200) {
-                    localStorage.setItem('token', response.data.token);
-                    localStorage.setItem('UserName', encryptUserName);
-                    swal("Good job!", "Successfully saved", "success");
-                    navigate('/');
-                } else {
-                    swal("Unfortunately!", "Unsuccessfully saved", "error");
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-                swal("Unfortunately!", error.response.data.error, "error");
-            });
+        } catch (error) {
+            console.error("Error in useEffect:", error);
+            swal("Unfortunately!", "Unsuccessfully saved", "error");
+        }
+        finally {
+            setLoading(false);
+        }
     }
 
     return (
@@ -55,6 +50,7 @@ function TestLogin() {
 
             {/* Login Form */}
             <div className="login-form">
+                {loading && <Preloader />}
                 <form onSubmit={handleFormSubmit} method='post' encType='multipart/form-data'><br></br><br></br><br></br><br></br>
                     {/* <div className="avatar">
                         <img
@@ -62,17 +58,18 @@ function TestLogin() {
                             // className="avatar"
                             alt="Avatar"
                         /> */}
-                        {/* <i className="material-icons">&#xE7FF;</i> */}
+                    {/* <i className="material-icons">&#xE7FF;</i> */}
                     {/* </div> */}
-                    <h3 style={{alignItems:'center'}}>&nbsp;&nbsp;Welcome to Taxi Rental</h3><br></br><br></br>
+                    <h3 style={{ alignItems: 'center' }}>&nbsp;&nbsp;Welcome to Taxi Rental</h3><br></br><br></br>
                     <h4 className="modal-title">Login to Your Account</h4>
 
                     {/* Username Input Field */}
                     <div className="form-group">
                         <input
-                            value={UserName}
-                            onChange={e => setUserName(e.target.value)}
+                            value={loginId}
+                            onChange={e => setLoginId(e.target.value)}
                             type="text"
+                            placeholder="Staff Id"
                             className="form-control"
                             required="required"
                         />
@@ -82,8 +79,8 @@ function TestLogin() {
                     <div className="form-group">
                         <input
                             type="password"
-                            value={UserPassword}
-                            onChange={e => setUserPassword(e.target.value)}
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
                             className="form-control"
                             placeholder="Password"
                             required="required"

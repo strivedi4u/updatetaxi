@@ -6,6 +6,7 @@ import taxi from '../assets/images/taxi.png';
 
 const MainContent = () => {
   return (
+    
     <div className="main-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
       <div className="container">
         <div className="row">
@@ -51,6 +52,8 @@ const MainContent = () => {
       </div>
     </div>
   );
-};
 
+};
+const token = localStorage.getItem("token");
+console.log(token);
 export default MainContent;

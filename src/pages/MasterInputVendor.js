@@ -1,15 +1,19 @@
-import React from "react";
+import React,{useState} from "react";
 import MainContent from "../components/MainContent";
 import Navbar from "../components/Navbar";
-import MasterHome from "../components/MasterHome";
-import InputVendor from "../components/InputVendor";
-import App from "../components/TaxiDetailsForm";
+import App from "../components/InputVendor";
 const MasterInputVendor = () => {
-
+  const [emplId, setEmplId] = useState();
+  const [emplName, setEmplName] = useState();
   return (
     <>
-      <Navbar home={"book"} />
-      <InputVendor/>
+    
+          <Navbar master={"book"}
+            setEmplId={setEmplId}
+            setEmplName={setEmplName}
+            emplId={emplId} // Passing emplId to Navbar if you need it
+            emplName={emplName} />
+      <App/>
 
     </>
   );

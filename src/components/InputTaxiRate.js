@@ -27,26 +27,26 @@ import { useMediaQuery } from "@mui/material";
 import { decryptData } from "../utils/encryption";
 import { getVendor } from "../apis/GetVendor";
 import { getModel } from "../apis/GetModel";
-import { getModelClass } from "../apis/GetModelClass";
 
-const InputModel = () => {
+const InputTaxiRate = () => {
   const [submitted, setSubmitted] = useState(false);
   const [vendorData, setVendorData] = useState([]);
-  const [vendorId1, setVendorId1] = useState();
-  const [modelData, setModelData] = useState();
-  const [modelId1, setModelId1] = useState();
-  const [modelclassData, setModelClassData] = useState();
-  const [modelclassId1, setModelClassId1] = useState();
+  const [vendorId1,setVendorId1]=useState();
+  const [modelData,setModelData]=useState();
+  const [modelId1,setModelId1]=useState();
+
 
   const [loading, setLoading] = useState(false); // Loading state for handling loader
   const [modelOptions, setModelOptions] = useState(false);
 
-  console.log("InputModel", vendorData);
+
+
+console.log("inputtaxi",vendorData);
   useEffect(() => {
     const getVendorData = async () => {
       try {
         const vendor = await getVendor(); // Wait for the fetchData to resolve
-        console.log("vendor1 ", vendor.Value); // Set the data into the state
+        console.log("vendor1 ",vendor.Value);// Set the data into the state
         setVendorData(vendor);
         console.log("Data fetched:", vendor);
       } catch (error) {
@@ -55,15 +55,15 @@ const InputModel = () => {
     };
 
     getVendorData(); // Call the async function
-  }, []);
+  }, []); 
 
-  console.log("Model Data : ", modelData);
+console.log("Model Data : ",modelData);
 
   useEffect(() => {
     const getModelData = async () => {
       try {
         const taximodel = await getModel(); // Wait for the fetchData to resolve
-        //console.log("Taxi Model : ",taximodel.Value);// Set the data into the state
+        console.log("Taxi Model : ",taximodel.Value);// Set the data into the state
         setModelData(taximodel);
         console.log("Data fetched:", taximodel);
       } catch (error) {
@@ -72,50 +72,28 @@ const InputModel = () => {
     };
 
     getModelData(); // Call the async function
-  }, []);
+  }, []); 
 
-  // useEffect(() => {
-  //   const getModelData = async () => {
-  //     try {
-  //       const taximodel = await getModel(); // Wait for the fetchData to resolve
-  //       console.log("Taxi Model : ",taximodel.Value);// Set the data into the state
-  //       setModelClassData(taximodel);
-  //       console.log("Data fetched:", taximodel);
-  //     } catch (error) {
-  //       console.error("Error in useEffect:", error);
-  //     }
-  //   };
+ 
 
-  //   getModelData(); // Call the async function
-  // }, []);
 
-  console.log("Model Class Data :", modelclassData);
-  useEffect(() => {
-    const getModelClassData = async () => {
-      try {
-        const taximodelclass = await getModelClass(); // Wait for the fetchData to resolve
-        //console.log("Taxi Model Class : ",taximodelclass.Value);// Set the data into the state
-        setModelClassData(taximodelclass);
-        console.log("Data fetched:", taximodelclass);
-      } catch (error) {
-        console.error("Error in useEffect:", error);
-      }
-    };
 
-    getModelClassData(); // Call the async function
-  }, []);
+
+
+  
+
 
   const initialValues = {
+    taxiId: "",
+    RegnNumber: "",
     modelId: "",
-    taximodelname: "",
-    taximodelmaker: "",
     //vendorId: "",
     isActive: "N",
     username: "",
   };
 
   const validationSchema = Yup.object().shape({
-    taximodelname: Yup.string().required("Taxi Model Name is required"),
+    RegnNumber: Yup.string().required("Registration Number is required" ),
     //  ModelNumber: Yup.string().required("Please Select Model Name"),
     // VendorNumber: Yup.string().required("Please Select Vendor Name"),
   });
@@ -123,27 +101,26 @@ const InputModel = () => {
   const handleSubmit = async (values) => {
     console.log("hi");
     console.log(values);
-    console.log("vendor id 1", vendorId1);
-    console.log("model id 1 ", modelId1);
+    console.log("vendor id 1",vendorId1);
+    console.log("model id 1 ",modelId1);
 
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
-      const Username = localStorage.getItem("UserName");
+      const Username= localStorage.getItem("UserName");
       console.log(token);
       const API_ENDPOINT =
-        process.env.REACT_APP_API_URL + "/Services/UpdateModel";
+        process.env.REACT_APP_API_URL + "/Services/UpdateTaxi";
 
       const response = await axios.post(
         API_ENDPOINT,
         {
-          ModelID: values.modelId,
-          ModelClassID: modelclassId1,
-          ModelName: values.taximodelname,
-          ModelMaker: values.taximodelmaker,
-          PassengerCapacity: values.taxipassengercapacity,
-          ActiveFlag: "Y",
-          username: decryptData(Username),
+          TaxiID: values.taxiId,
+          RegNo: values.RegnNumber,
+          ModelID: modelId1,
+          VendorID: vendorId1,
+          ActiveFlag:  "Y",
+          username: decryptData(Username)
         },
         {
           headers: {
@@ -160,11 +137,15 @@ const InputModel = () => {
         setSubmitted(false);
       }, 3000);
     } catch (error) {
-      console.error("Error submitting form:", error);
+      alert("Error submitting form:", error);
     } finally {
       setLoading(false);
     }
   };
+
+
+ 
+ 
 
   const defaultOptions = {
     loop: false,
@@ -175,7 +156,9 @@ const InputModel = () => {
     },
   };
   const isMobile = useMediaQuery("(max-width:100px)");
-  const animationSize = isMobile ? "400px" : "200px"; // Adjust size based on screen width
+  const animationSize = isMobile ? '600px' : '400px'; // Adjust size based on screen width
+
+
 
   return (
     <Box
@@ -205,7 +188,11 @@ const InputModel = () => {
             alignItems: "center",
           }}
         >
-          <Lottie options={defaultOptions} height={"100px"} width={"300px"} />
+          <Lottie
+            options={defaultOptions}
+            height={'100px'}
+            width={'300px'}
+          />
         </Box>
       ) : (
         <>
@@ -223,7 +210,7 @@ const InputModel = () => {
               letterSpacing: "1px",
             }}
           >
-            New Taxi Model Details Input 
+            New Taxi Rate Details Input
           </Typography>
 
           <Formik
@@ -233,17 +220,20 @@ const InputModel = () => {
           >
             {({ isSubmitting }) => (
               <Form>
+ 
+    
+
                 <Grid container spacing={2}>
                   {/* Form fields in 2 columns */}
                   <Grid item xs={12} sm={6}>
                     <Field
                       as={TextField}
-                      name="modelId"
-                      label="Model Id (blank)"
+                      name="taxiId"
+                      label="Taxi Id (blank)"
                       variant="outlined"
                       fullWidth
                       margin="normal"
-                      helperText={<ErrorMessage name="modelId" />}
+                      helperText={<ErrorMessage name="taxiId" />}
                       sx={{
                         "& .MuiFormHelperText-root": {
                           color: "red",
@@ -255,13 +245,12 @@ const InputModel = () => {
                   <Grid item xs={12} sm={6}>
                     <Field
                       as={TextField}
-                      name="taximodelname"
-                      label="Model Name"
+                      name="RegnNumber"
+                      label="Registration Number"
                       variant="outlined"
                       fullWidth
                       margin="normal"
-                      inputProps={{ maxLength: 100 }} // Limit to 20 characters
-                      helperText={<ErrorMessage name="taximodelname" />}
+                      helperText={<ErrorMessage name="RegnNumber" />}
                       sx={{
                         "& .MuiFormHelperText-root": {
                           color: "red",
@@ -271,69 +260,76 @@ const InputModel = () => {
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
-                    {/* Model Class Id Dropdown */}
-                    <FormControl fullWidth variant="outlined" margin="normal">
-                      <InputLabel id="model-class-id-label">
-                        Model Class
-                      </InputLabel>
-                      <Field
-                        as={Select}
-                        name="ModelNumber"
-                        labelId="model-class-id-label"
-                        label="Model Class Id"
-                        fullWidth
-                        sx={{
-                          "& .MuiFormHelperText-root": {
-                            color: "red",
-                            fontSize: "10px",
-                          },
-                        }}
-                        onChange={(e) => setModelClassId1(e.target.value)} // Handle change
-                      >
-                        {/* Map through the fetched model options */}
-                        {Array.isArray(modelclassData) &&
-                        modelclassData.length > 0 ? (
-                          modelclassData.map((model) => (
-                            <MenuItem
-                              key={model.CLASS_ID}
-                              value={model.CLASS_ID}
-                            >
-                              {model.CLASS_NAME}
-                            </MenuItem>
-                          ))
-                        ) : (
-                          <MenuItem disabled>No Model Available</MenuItem>
-                        )}
-                      </Field>
-                      <ErrorMessage
-                        name="ModelNumber"
-                        component="div"
-                        style={{ color: "red", fontSize: "10px" }}
-                      />
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <Field
-                      as={TextField}
-                      name="taximodelmaker"
-                      label="Model Maker"
-                      variant="outlined"
-                      fullWidth
-                      margin="normal"
-                      inputProps={{ maxLength: 50 }} // Limit to 20 characters
-                      helperText={<ErrorMessage name="taximodelmaker" />}
-                      sx={{
-                        "& .MuiFormHelperText-root": {
-                          color: "red",
-                          fontSize: "10px",
-                        },
-                      }}
-                    />
-                  </Grid>
+        {/* Model Class Id Dropdown */}
+        <FormControl fullWidth variant="outlined" margin="normal">
+          <InputLabel id="model-class-id-label">Model Name</InputLabel>
+          <Field
+            as={Select}
+            name="ModelNumber"
+            labelId="model-class-id-label"
+            label="Model Class Id"
+            fullWidth
+            sx={{
+              '& .MuiFormHelperText-root': {
+                color: 'red',
+                fontSize: '10px',
+              },
+            }}
+            onChange={(e) => setModelId1( e.target.value)} // Handle change
 
-                  <Grid item xs={12} sm={6}>
+          >
+            {/* Map through the fetched model options */}
+            {Array.isArray(modelData) && modelData.length > 0 ? (
+          modelData.map((model) => (
+              <MenuItem key={model.MODL_ID} value={model.MODL_ID}>
+                {model.MODL_NAME} 
+              </MenuItem>
+           ))
+          ) : (
+            <MenuItem disabled>No Model Available</MenuItem>
+          )}
+          </Field>
+          <ErrorMessage name="ModelNumber" component="div" style={{ color: 'red', fontSize: '10px' }} />
+        </FormControl>
+      </Grid>
+
+      <Grid item xs={12} sm={6}>
+        {/* Model Class Id Dropdown */}
+        <FormControl fullWidth variant="outlined" margin="normal">
+          <InputLabel id="model-class-id-label">Vendor Name</InputLabel>
+          <Field
+            as={Select}
+            name="VendorNumber"
+            labelId="model-class-id-label"
+            label="Vendor Id"
+            fullWidth
+            sx={{
+              '& .MuiFormHelperText-root': {
+                color: 'red',
+                fontSize: '10px',
+              },
+            }}
+            onChange={(e) => setVendorId1( e.target.value)} // Handle change
+
+          >
+            {/* Map through the fetched model options */}
+            {Array.isArray(vendorData) && vendorData.length > 0 ? (
+          vendorData.map((model) => (
+              <MenuItem key={model.VEND_ID} value={model.VEND_ID}>
+                {model.VEND_NAME} 
+              </MenuItem>
+           ))
+          ) : (
+            <MenuItem disabled>No Vendors Available</MenuItem>
+          )}
+          </Field>
+          <ErrorMessage name="VendorNumber" component="div" style={{ color: 'red', fontSize: '10px' }} />
+        </FormControl>
+      </Grid>
+
+      <Grid item xs={12} sm={6}>
                     <FormControl fullWidth margin="normal" variant="outlined" >
-                      <InputLabel>Passenger Capacity</InputLabel>
+                      <InputLabel>Rate Slab </InputLabel>
                       <Field
                         name="taxipassengercapacity" // Change the field name to match the number field
                         as={Select} // Use the Select component from Material-UI
@@ -352,15 +348,17 @@ const InputModel = () => {
                         <MenuItem value={3}>3</MenuItem>
                         <MenuItem value={4}>4</MenuItem>
                         <MenuItem value={5}>5</MenuItem>
-                        <MenuItem value={6}>6</MenuItem>
-                        <MenuItem value={7}>7</MenuItem>
                       </Field>
                       <FormHelperText>
                         <ErrorMessage name="taxipassengercapacity" />
                       </FormHelperText>
                     </FormControl>
                   </Grid>
+    
+                
                 </Grid>
+
+                
 
                 {loading ? (
                   <Box sx={{ textAlign: "center", mt: 2 }}>
@@ -372,8 +370,9 @@ const InputModel = () => {
                     variant="contained"
                     color="primary"
                     fullWidth
-                    sx={{ mt: 4 }}
+                    sx={{ mt: 2 }}
                     disabled={isSubmitting}
+                    
                   >
                     Submit
                   </Button>
@@ -436,7 +435,7 @@ const App = () => {
                 height: "100%",
               }}
             >
-              <InputModel />
+              <InputTaxiRate />
             </Box>
           </Grid>
         </Grid>

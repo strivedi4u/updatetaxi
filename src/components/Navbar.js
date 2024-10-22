@@ -6,9 +6,11 @@ import logo from '../assets/images/logo.jpg';
 import axios from 'axios';
 import { decryptData } from '../utils/encryption';
 import Preloader from './Preloader';
+import { fetchData, GetEmployeeProfile } from '../apis/GetEmployeeProfile';
 
-const Navbar = ({ setEmplId, setEmplName, emplId, emplName, home, mbooking, gbooking, vrequest, uManuals, profile }) => {
-
+const Navbar = ({ setEmplId, emplId, setEmplName, emplName, setDesg, desg, setMob, mob, setComp, comp, setApprover, approver, setCostCenter, costCenter, home, mbooking, gbooking, vrequest, uManuals, profile }) => {
+    const [userData, setUserData] = useState(null); // state for storing the user data
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     console.log(emplId, emplName)
     const URL = process.env.REACT_APP_API_URL;
@@ -30,40 +32,49 @@ const Navbar = ({ setEmplId, setEmplName, emplId, emplName, home, mbooking, gboo
 
     useEffect(() => {
         if (!UserName || !authToken) {
-            window.location.href = '/login';
+            //window.location.href = '/login';
         }
     }, [UserName, authToken]);
 
+
+    // useEffect(() => {
+    //     const empldata= async =await fetchData();
+    //     setUserData(empldata);
+    //     console.log("hello");
+    //     console.log(empldata);
+    //     // setUserName(empldata.Value.Table1[0].EMPL_ID)
+    //     // console.log((empldata.Value.Table1[0].EMPL_ID));
+
+
+    // }, [userData]);
+
     useEffect(() => {
-        const fetchData = async () => {
+        const getData = async () => {
             try {
-                let decryptUserName = decryptData(UserName);
-                const response = await axios.post(API, { UserName: decryptUserName }, {
-                    headers: { "authToken": authToken }
-                });
+                setLoading(true);
+                const emplData = await GetEmployeeProfile(UserName); // Wait for the fetchData to resolve
+                console.log("string1", emplData);
+                console.log(emplData.EMPL_NAME);
+                setEmplId(decryptData(emplData.EMPL_ID));
+                setEmplName(decryptData(emplData.EMPL_NAME));
+                setProfilePhoto(emplData.profile_photo);
+                setDesg(decryptData(emplData.EMPL_DESG_CODE));
+                setMob(decryptData(emplData.PRESENT_PHONE));
+                setComp(decryptData(emplData.EMPL_COMP_CODE));
+                setApprover(decryptData(emplData.EMPL_REPORT_EMPL_ID));
+                setCostCenter();
+                setUserData(emplData); // Set the data into the state
 
-                // Log the entire response object to check the structure
-                console.log('API Response:', response);
-
-                if (response.status === 200 && response.data?.Value?.Table1?.[0]) {
-                    const userData = response.data.Value.Table1[0];
-                    console.log("User Data: ", userData);
-                    setEmplId(decryptData(userData.EMPL_ID)); // No decryption needed if it's plaintext
-                    setEmplName(decryptData(userData.EMPL_NAME));
-                    setProfilePhoto(userData.profile_photo);
-                } else {
-                    swal("Error", "Data fetch was unsuccessful", "error");
-                    navigate('/login');
-                }
+                console.log("Data fetched:", emplData);
             } catch (error) {
-                console.error('Fetch error:', error);
-                swal("Error", "An error occurred while fetching the profile", "error");
-                navigate('/login');
+                console.error("Error in useEffect:", error);
+            } finally {
+                setLoading(false);
             }
         };
 
-        fetchData();
-    }, [API, authToken, UserName, setEmplId, setEmplName]);
+        getData(); // Call the async function
+    }, []);
 
     return (
         <>

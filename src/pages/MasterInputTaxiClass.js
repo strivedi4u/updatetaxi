@@ -1,8 +1,8 @@
 import React,{useState} from "react";
 import MainContent from "../components/MainContent";
 import Navbar from "../components/Navbar";
-import App from "../components/InputDriver";
-const MasterInputDriver = () => {
+import App from "../components/InputTaxiClass";
+const MasterInputTaxiClass = () => {
   const [emplId, setEmplId] = useState();
   const [emplName, setEmplName] = useState();
   return (
@@ -20,4 +20,4 @@ const MasterInputDriver = () => {
 };
 
 
-export default MasterInputDriver;
+export default MasterInputTaxiClass;

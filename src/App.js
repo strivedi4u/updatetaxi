@@ -24,12 +24,14 @@ import { decryptData } from './utils/encryption';
 import { GetUserRole } from './apis/GetUserRole';
 import { GetEmployeeProfile } from './apis/GetEmployeeProfile';
 import { WOW } from 'wowjs';
-import 'animate.css'; // Import the animation CSS
+import './assets/css/animated.css'; // Import the animation CSS
+import Preloader from './components/Preloader';
 
 const App = () => {
   const [loading, setLoading] = useState(false);
   const [role, setRole] = useState(null);
   const [userName, setUserName] = useState(localStorage.getItem('UserName'));
+
   const [profilePhoto, setProfilePhoto] = useState();
   const [emplId, setEmplId] = useState();
   const [emplName, setEmplName] = useState();
@@ -39,9 +41,7 @@ const App = () => {
   const [approver, setApprover] = useState();
   const [costCenter, setCostCenter] = useState();
 
-  // const navigate = useNavigate();
 
-  // WOW.js animation setup
   useEffect(() => {
     const wow = new WOW({
       boxClass: 'wow',
@@ -53,7 +53,7 @@ const App = () => {
     wow.init();
   }, []);
 
-  // Fetch user data and role
+
   useEffect(() => {
     const getUserData = async () => {
       console.log('  // Fetch user data and role', userName);
@@ -77,6 +77,7 @@ const App = () => {
 
       } catch (error) {
         console.error("Error fetching user data:", error);
+        setRole('Error');
         // navigate('/login'); // Redirect to login on error
       } finally {
         setLoading(false);
@@ -86,13 +87,17 @@ const App = () => {
     getUserData();
   }, [userName]);
 
+  if (loading) {
+    return <Preloader />; // Optionally show a loading indicator
+  }
+
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route exact path="/" element={<Home userName={userName} role={role} />} />
+          <Route exact path="/" element={<Home userName={userName} role={role} emplId={emplId} emplName={emplName} profilePhoto={profilePhoto} />} />
           <Route exact path="/gbook" element={<GBooking />} />
-          <Route exact path="/mbook" element={<MBooking />} />
+          <Route exact path="/mbook" element={<MBooking userName={userName} role={role} emplId={emplId} emplName={emplName} profilePhoto={profilePhoto} desg={desg} mob={mob} comp={comp} approver={approver} costCenter={costCenter} />} />
           <Route exact path="/vrequest" element={<VRequest />} />
           <Route exact path="/profile" element={<Profile />} />
           <Route exact path="/api" element={<TaxiRentalSystem />} />

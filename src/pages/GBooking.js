@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 
 import Navbar from '../components/Navbar';
 import GBookingForm from '../components/GBookingForm';

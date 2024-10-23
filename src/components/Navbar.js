@@ -8,33 +8,33 @@ import { decryptData } from '../utils/encryption';
 import Preloader from './Preloader';
 import { fetchData, GetEmployeeProfile } from '../apis/GetEmployeeProfile';
 
-const Navbar = ({ setEmplId, emplId, setEmplName, emplName, setDesg, desg, setMob, mob, setComp, comp, setApprover, approver, setCostCenter, costCenter, home, mbooking, gbooking, vrequest, uManuals, profile }) => {
+const Navbar = ({ home, emplId, emplName, profilePhoto, gbooking, mbooking, vrequest, uManuals, profile }) => {
     const [userData, setUserData] = useState(null); // state for storing the user data
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     console.log(emplId, emplName)
-    const URL = process.env.REACT_APP_API_URL;
-    const API = `${URL}/Services/GetEmployeeProfile`;
+    // const URL = process.env.REACT_APP_API_URL;
+    // const API = `${URL}/Services/GetEmployeeProfile`;
 
-    const [UserName, setUserName] = useState(localStorage.getItem('UserName'));
-    const [authToken, setAuthToken] = useState(localStorage.getItem('token'));
-    const [profilePhoto, setProfilePhoto] = useState('');
-    const [isCollapsed, setIsCollapsed] = useState(true);
+    // const [UserName, setUserName] = useState(localStorage.getItem('UserName'));
+    // const [authToken, setAuthToken] = useState(localStorage.getItem('token'));
+    // const [profilePhoto, setProfilePhoto] = useState('');
+    // const [isCollapsed, setIsCollapsed] = useState(true);
 
     const handleLogout = () => {
         localStorage.clear();
         window.location.href = '/login';
     }
 
-    const toggleNavbar = () => {
-        setIsCollapsed(!isCollapsed);
-    };
+    // const toggleNavbar = () => {
+    //     setIsCollapsed(!isCollapsed);
+    // };
 
-    useEffect(() => {
-        if (!UserName || !authToken) {
-            //window.location.href = '/login';
-        }
-    }, [UserName, authToken]);
+    // useEffect(() => {
+    //     if (!UserName || !authToken) {
+    //         //window.location.href = '/login';
+    //     }
+    // }, [UserName, authToken]);
 
 
     // useEffect(() => {
@@ -48,33 +48,33 @@ const Navbar = ({ setEmplId, emplId, setEmplName, emplName, setDesg, desg, setMo
 
     // }, [userData]);
 
-    useEffect(() => {
-        const getData = async () => {
-            try {
-                setLoading(true);
-                const emplData = await GetEmployeeProfile(UserName); // Wait for the fetchData to resolve
-                console.log("string1", emplData);
-                console.log(emplData.EMPL_NAME);
-                setEmplId(decryptData(emplData.EMPL_ID));
-                setEmplName(decryptData(emplData.EMPL_NAME));
-                setProfilePhoto(emplData.profile_photo);
-                setDesg(decryptData(emplData.EMPL_DESG_CODE));
-                setMob(decryptData(emplData.PRESENT_PHONE));
-                setComp(decryptData(emplData.EMPL_COMP_CODE));
-                setApprover(decryptData(emplData.EMPL_REPORT_EMPL_ID));
-                setCostCenter();
-                setUserData(emplData); // Set the data into the state
+    // useEffect(() => {
+    //     const getData = async () => {
+    //         try {
+    //             setLoading(true);
+    //             const emplData = await GetEmployeeProfile(UserName); // Wait for the fetchData to resolve
+    //             console.log("string1", emplData);
+    //             console.log(emplData.EMPL_NAME);
+    //             setEmplId(decryptData(emplData.EMPL_ID));
+    //             setEmplName(decryptData(emplData.EMPL_NAME));
+    //             setProfilePhoto(emplData.profile_photo);
+    //             setDesg(decryptData(emplData.EMPL_DESG_CODE));
+    //             setMob(decryptData(emplData.PRESENT_PHONE));
+    //             setComp(decryptData(emplData.EMPL_COMP_CODE));
+    //             setApprover(decryptData(emplData.EMPL_REPORT_EMPL_ID));
+    //             setCostCenter();
+    //             setUserData(emplData); // Set the data into the state
 
-                console.log("Data fetched:", emplData);
-            } catch (error) {
-                console.error("Error in useEffect:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
+    //             console.log("Data fetched:", emplData);
+    //         } catch (error) {
+    //             console.error("Error in useEffect:", error);
+    //         } finally {
+    //             setLoading(false);
+    //         }
+    //     };
 
-        getData(); // Call the async function
-    }, []);
+    //     getData(); // Call the async function
+    // }, []);
 
     return (
         <>
@@ -90,7 +90,7 @@ const Navbar = ({ setEmplId, emplId, setEmplName, emplName, setDesg, desg, setMo
                             data-target="#navbarCollapse"
                             data-toggle="collapse"
                             className="navbar-toggle"
-                            onClick={toggleNavbar}
+                        // onClick={toggleNavbar}
                         >
                             <span className="navbar-toggler-icon"></span>
                             <span className="icon-bar"></span>
@@ -99,7 +99,7 @@ const Navbar = ({ setEmplId, emplId, setEmplName, emplName, setDesg, desg, setMo
                         </button>
                     </div>
 
-                    <div id="navbarCollapse" className={`collapse navbar-collapse ${!isCollapsed ? 'in' : ''}`}>
+                    <div id="navbarCollapse" className={`collapse navbar-collapse`}>
                         <ul className="nav navbar-nav">
                             <li className={home}><a href="/">Home</a></li>
                             <li className="dropdown">

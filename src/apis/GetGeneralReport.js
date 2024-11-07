@@ -6,17 +6,26 @@ import { decryptData } from "../utils/encryption";
 // "LocnCode":"002",
 // "VendorID":"",
 // "UserName":"598801"
-export const getModel = async () => {
+export const getGeneralReport = async () => {
   const UserName = localStorage.getItem("UserName");
   const authToken = localStorage.getItem("token");
   const URL = process.env.REACT_APP_API_URL;
-  const API = `${URL}/Services/GetModel`;
+  const API = `${URL}/Services/GetGeneralReport`;
   try {
-    let decryptUserName = (UserName);
+    console.log("Hi")
+    let decryptUserName = decryptData(UserName);
 
     const response = await axios.post(
       API,
-      { UserName: decryptUserName, ModelCode: "", ModelMake: ""},
+      { Type:"ALL",
+        RequestID:"",
+        CompCode:"101",
+        Status:"",
+        Requestor:"",
+        FromDate:"",
+        ToDate:"",
+        Filter:"",
+        UserName: "598801"},
       {
         headers: { authToken: authToken },
       }
@@ -26,9 +35,9 @@ export const getModel = async () => {
     console.log("API Response:", response);
 
     if (response.status === 200 && response.data) {
-      const modelData = response.data.Value;
-      console.log("Model data", modelData);
-      return modelData;
+      const getGeneralReport = response.data.Value;
+      console.log("getGeneralReport data", getGeneralReport);
+      return getGeneralReport;
       // console.log("User Data: ", userData);
       // setEmplId(decryptData(userData.EMPL_ID)); // No decryption needed if it's plaintext
       // setEmplName(decryptData(userData.EMPL_NAME));

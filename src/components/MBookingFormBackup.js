@@ -10,8 +10,7 @@ import { Typography } from '@mui/material';
 import Preloader from './Preloader';
 import { getEmployeeLookup } from '../apis/GetEmplLookup';
 import { getModel } from '../apis/GetModel';
-import { updateAction } from '../apis/UpdateAction';
-const MBookingForm = ({
+const MBookingFormBackup = ({
     emplId,
     emplName,
     desg,
@@ -21,85 +20,6 @@ const MBookingForm = ({
     costCenter
 }) => {
     const [mobile, setMobile] = useState(mob);
-    const [passengerLimit, setPassengerLimit] = useState(7);
-
-    // var [passengerSection, setPassengerSection] = useState(0);
-
-    var [passengerSection, setPassengerSection] = useState(0); // Example value, adjust as needed
-    var [passenger, setPassenger] = useState(0);
-
-    const [AppName, setAppName] = useState("TAXI-BOOK");
-    const [RequestID, setRequestID] = useState("");
-    const [RequestStatus, setRequestStatus] = useState("DRAFT");
-    const [TourType, setTourType] = useState("L");
-    const [RequestorType, setRequestorType] = useState("S");
-    const [RequestorID, setRequestorID] = useState(""); // Initialize with employee ID or another value
-    const [RequestorMobile, setRequestorMobile] = useState(""); // Initialize with mobile number
-    //   const [TripStartPoint, setTripStartPoint] = useState("Gurugram");
-    //   const [TripEndPoint, setTripEndPoint] = useState("Delhi");
-    //   const [TripStartTime, setTripStartTime] = useState("07-Nov-2024 10:23");
-    //   const [TripEndTime, setTripEndTime] = useState("07-Nov-2024 12:23");
-    //   const [TripWayPoint, setTripWayPoint] = useState("");
-    const [RequestorModel, setRequestorModel] = useState("SWIFT");
-    const [ApproverModel, setApproverModel] = useState("SWIFT");
-    const [AllotedModel, setAllotedModel] = useState("SWIFT");
-    const [VendorID, setVendorID] = useState("");
-    const [VehicleRegNo, setVehicleRegNo] = useState("");
-    const [DriverID, setDriverID] = useState("");
-    const [CreatorID, setCreatorID] = useState("598801"); // Initialize with employee ID or another value
-    const [Action, setAction] = useState("SUBMIT");
-    const [Comments, setComments] = useState("");
-    const [PassengerDet, setPassengerDet] = useState("");
-    //  const [Purpose, setPurpose] = useState("");
-    const [ExtraBills, setExtraBills] = useState("");
-    const [BillCatg, setBillCatg] = useState("");
-
-    const [poVisit, setPoVisit] = useState();
-
-    const [pickup, setPickup] = useState();
-    const [destination, setDestination] = useState();
-    const [waypoints, setWaypoints] = useState();
-    const [approxKM, setAproxKM] = useState();
-
-    // const [costCenter, setCostCenter] = useState();
-    const [dtime, setDtime] = useState();
-    const [atime, setAtime] = useState();
-
-    //   const [UserName, setUserName] = useState("");
-
-    useEffect(() => {
-
-        try {
-            setPassengerSection(Math.ceil(passenger / 2));
-        } catch (error) {
-            console.error('Error fetching approver data:', error);
-        } finally {
-            //setLoading(false); // Stop loading after the API call
-        }
-
-    }, [passenger]);
-
-    const [passengerData, setPassengerData] = useState(
-        Array(passengerSection).fill({
-            pStaffId: "",
-            pName: "",
-            pMob: "",
-            pDept: "",
-        })
-    );
-
-    const handleChange = (index, field, value) => {
-        setPassengerData(prevData =>
-            prevData.map((item, idx) =>
-                idx === index ? { ...item, [field]: value } : item
-            )
-        );
-    };
-
-
-
-
-
     console.log('mobile', mobile)
     console.log('mob', mob)
     const [loading, setLoading] = useState(false);
@@ -112,7 +32,7 @@ const MBookingForm = ({
     const [authToken, setAuthToken] = useState(localStorage.getItem('token'));
 
     var [currentSection, setCurrentSection] = useState(1);
-
+    var [passengerSection, setPassengerSection] = useState(0);
 
     const [approverName, setApproverName] = useState();
     const [model, setModel] = useState([]);
@@ -138,8 +58,8 @@ const MBookingForm = ({
                 const model = await getModel();
                 console.log(model);
                 setApproverName(decryptData(employeeLookup.Name));
-                setModel(model);
-                //  setChooseTaxi(model[0].MODL_CODE);// Assuming the approver is in the response's data
+                setModel(model); 
+                setChooseTaxi(model.Value[0].MODL_ID);// Assuming the approver is in the response's data
             } catch (error) {
                 console.error('Error fetching approver data:', error);
             } finally {
@@ -277,16 +197,16 @@ const MBookingForm = ({
 
     // const [comp, setComp] = useState();
     // const [approver, setApprover] = useState();
-    // const [poVisit, setPoVisit] = useState();
+    const [poVisit, setPoVisit] = useState();
 
-    // const [pickup, setPickup] = useState();
-    // const [destination, setDestination] = useState();
-    // const [waypoints, setWaypoints] = useState();
-    // const [approxKM, setAproxKM] = useState();
+    const [pickup, setPickup] = useState();
+    const [destination, setDestination] = useState();
+    const [waypoints, setWaypoints] = useState();
+    const [approxKM, setAproxKM] = useState();
 
-    // // const [costCenter, setCostCenter] = useState();
-    // const [dtime, setDtime] = useState();
-    // const [atime, setAtime] = useState();
+    // const [costCenter, setCostCenter] = useState();
+    const [dtime, setDtime] = useState();
+    const [atime, setAtime] = useState();
 
     // State for first set
     const [pStaffId1, setPStaffId1] = useState();
@@ -326,27 +246,21 @@ const MBookingForm = ({
 
     // Function to handle adding a new passenger
     const addPassenger = () => {
-        setPassenger(++passenger);
-        // if (currentSection != 3 && currentSection != 4) {
-        //     setCurrentSection(3);
-        // }
-        // setPassengerSection(++passengerSection);
-        // if (passengerSection == 3 || passengerSection == 4) {
-        //     setCurrentSection(4);
-        // }
-        // setPassengers(prevPassengers => [
-        //     ...prevPassengers,
-        //     { passengerNumber: prevPassengers.length + 1 }
-        // ]);
+        if (currentSection != 3 && currentSection != 4) {
+            setCurrentSection(3);
+        }
+        setPassengerSection(++passengerSection);
+        if (passengerSection == 3 || passengerSection == 4) {
+            setCurrentSection(4);
+        }
+        setPassengers(prevPassengers => [
+            ...prevPassengers,
+            { passengerNumber: prevPassengers.length + 1 }
+        ]);
     };
 
     const handleSetSection = (sectionNumber) => {
         setCurrentSection(sectionNumber);
-        console.log('handleSetSection', sectionNumber);
-    };
-    const handleSetPassengerSection = (sectionNumber) => {
-        setCurrentSection(3);
-        setPassengerSection(sectionNumber);
         console.log('handleSetSection', sectionNumber);
     };
 
@@ -450,48 +364,10 @@ const MBookingForm = ({
         });
         // setCurrentSection(1);
     };
-    const handleSubmit = async () => {
-        console.group("Handle Submit button click");
-        try {
-            setLoading(true);
-            console.log("updateAction api call");
 
-            const updateActionResponse = await updateAction(
-                AppName,
-                RequestID,
-                RequestStatus,
-                TourType,
-                RequestorType,
-                RequestorID,
-                RequestorMobile,
-                pickup,
-                destination,
-                dtime,
-                atime,
-                waypoints,
-                RequestorModel,
-                ApproverModel,
-                AllotedModel,
-                VendorID,
-                VehicleRegNo,
-                DriverID,
-                CreatorID,
-                Action,
-                Comments,
-                PassengerDet,
-                poVisit,
-                ExtraBills,
-                BillCatg,
-                UserName
-            );
-
-            console.log("update Action", updateActionResponse);
-        } catch (error) {
-            console.error('Error fetching update data:', error);
-        } finally {
-            setLoading(false); // Stop loading after the API call
-            swal("Congratulations 🎉", "Taxi has been booked successfully", "success");
-        }
+    const handleSubmit = () => {
+        swal("Congratulations 🎉", "Taxi has been booked successfully", "success");
+        navigate("/view");
     };
 
     // const handlePassengerSection = (e) => {
@@ -549,16 +425,7 @@ const MBookingForm = ({
             ? 'white' // Text should be white if background is green
             : 'black'; // Default text color
     };
-    const handleTaxiChange = (e) => {
-        const selectedTaxi = e.target.value;  // Get the selected taxi model
-        setChooseTaxi(selectedTaxi);  // Set the selected taxi
 
-        // Find the car model in the 'model' array and update passenger limit
-        const selectedCar = model.find(car => car.MODL_CODE === selectedTaxi);
-        if (selectedCar) {
-            setPassengerLimit(selectedCar.MODL_PASS_CAP);  // Update the passenger limit based on selected taxi
-        }
-    };
     return (
         <div className="main-banner wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.25s">
             {loading && <Preloader />}
@@ -662,27 +529,67 @@ const MBookingForm = ({
                                     </span>
 
                                     <ul className="dropdown-menu" style={{ marginLeft: 12 }}>
-                                        {passenger < passengerLimit && (
+                                        {passengerSection < 4 && (
                                             <li onClick={addPassenger}><a style={{ display: 'flex' }}> <span style={{ marginTop: 0, fontSize: 12 }}>Add Passenger &nbsp;&nbsp; &nbsp; &nbsp;  </span>
                                                 <i className="material-icons" style={{ fontSize: 18 }}>  add_circle</i></a></li>
-                                        )}
-                                        {passenger >= 1 && (
-                                            Array.from({ length: passenger }).map((_, index) => (
-                                                <li key={index} onClick={() => handleSetPassengerSection(Math.ceil((index + 1) / 2))} className="mbooking">
-                                                    <a style={{ display: 'flex' }}>
-                                                        <span style={{ marginTop: 0, marginRight: -2, fontSize: 12 }}>
-                                                            Passenger Details {index + 1} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        </span>
-                                                        {/* Optional delete icon */}
-                                                        {/* <i className="material-icons" style={{ fontSize: 18 }}>delete</i> */}
-                                                    </a>
-                                                </li>
-                                            ))
                                         )}
 
                                         {/* <li className={props.mbooking} ><a href="/mbook" style={{ display: 'flex' }}> <span style={{ marginTop: 0, marginRight: -2, fontSize: 12 }}>Passenger : 1&nbsp;&nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  </span>
                                             <i className="material-icons" style={{ fontSize: 18 }}>  delete</i></a></li> */}
+                                        {passengerSection >= 1 && (
+                                            <li onClick={(e) => handleSetSection(3)} className={`mbooking`}>
+                                                <a style={{ display: 'flex' }}>
+                                                    <span style={{ marginTop: 0, marginRight: -2, fontSize: 12 }}>
+                                                        Passenger Details 1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    </span>
+                                                    {/* <i className="material-icons" style={{ fontSize: 18 }}>delete</i> */}
+                                                </a>
+                                            </li>
+                                        )}
 
+                                        {passengerSection >= 3 && (
+                                            <li className={`mbooking`}>
+                                                <a onClick={(e) => handleSetSection(4)} style={{ display: 'flex' }}>
+                                                    <span style={{ marginTop: 0, marginRight: -2, fontSize: 12 }}>
+                                                        Passenger Details 2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    </span>
+                                                    {/* <i className="material-icons" style={{ fontSize: 18 }}>delete</i> */}
+                                                </a>
+                                            </li>
+                                        )}
+
+                                        {/* {passengerSection >= 3 && (
+                                            <li className={`mbooking`}>
+                                                <a style={{ display: 'flex' }}>
+                                                    <span style={{ marginTop: 0, marginRight: -2, fontSize: 12 }}>
+                                                        Passenger: {passengerSection}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    </span>
+                                                    <i className="material-icons" style={{ fontSize: 18 }}>delete</i>
+                                                </a>
+                                            </li>
+                                        )}
+                                        {passengerSection === 4 && (
+                                            <li className={`mbooking`}>
+                                                <a style={{ display: 'flex' }}>
+                                                    <span style={{ marginTop: 0, marginRight: -2, fontSize: 12 }}>
+                                                        Passenger: {passengerSection}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    </span>
+                                                    <i className="material-icons" style={{ fontSize: 18 }}>delete</i>
+                                                </a>
+                                            </li>
+                                        )} */}
+                                        {/* {passengers.map((passenger, index) => (
+                                                <li key={index} className={`mbooking-${index + 1}`}>
+                                                    <a style={{ display: 'flex' }}>
+                                                        <span style={{ marginTop: 0, marginRight: -2, fontSize: 12 }}>
+                                                            Passenger: {passenger.passengerNumber}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        </span>
+                                                        <i className="material-icons" style={{ fontSize: 18 }}>delete</i>
+                                                    </a>
+                                                </li>
+                                            ))} */}
+                                        {/* <li className={props.gbooking}><a href="/gbook">On Behalf Booking</a></li>
+                                        <li className={props.gbooking}><a href="/gbook">Guest Booking</a></li> */}
                                     </ul>
                                     {/* </li> */}
 
@@ -716,7 +623,6 @@ const MBookingForm = ({
                                                     type="number"
                                                     className='input-t'
                                                     value={emplId}
-                                                    onChange={(e) => setRequestorID(e.target.value)}
                                                     required readOnly
                                                 />
                                             </div>
@@ -895,11 +801,11 @@ const MBookingForm = ({
                                                 <select
                                                     className='select-t'
                                                     value={chooseTaxi}
-                                                    onChange={handleTaxiChange}
+                                                    onChange={(e) => setChooseTaxi(e.target.value)}
                                                 >
                                                     {model.map((car) => (
-                                                        <option key={car.MODL_CODE} value={car.MODL_CODE}>
-                                                            {car.MODL_CODE}
+                                                        <option key={car.MODL_ID} value={car.MODL_ID}>
+                                                            {car.MODL_NAME}
                                                         </option>
                                                     ))}
                                                 </select>
@@ -973,7 +879,7 @@ const MBookingForm = ({
                                                     type="button"
                                                     id="submitButton"
                                                     onClick={handleSubmit}
-                                                    //  disabled={true}  // Disable the button
+                                                    disabled={true}  // Disable the button
                                                     style={{
                                                         backgroundColor: '#28a745',   // Official green color
                                                         border: 'none',               // No border for simplicity
@@ -1077,139 +983,207 @@ const MBookingForm = ({
 
 
                                 {/* Current section Section 3 */}
-                                {/* {(currentSection === 3) && ( */}
+                                {(currentSection === 3) && (
 
-
-
-                                {/* )} */}
-                                {/* 
-////////////////////////////////////////////// */}
-                                {/* Current section Section 4 */}
-
-
-
-
-
-
-
-                                {currentSection >= 3 && (
                                     <form>
-                                        <div>
-                                            {/* Loop through passenger sections, with pairs determined by currentSection */}
-                                            {Array.from({ length: passenger }).map((_, index) => {
-                                                const currentPassengerSection = Math.ceil((index + 1) / 2); // Calculate current passenger section
+                                        {(passengerSection >= 1) && (
+                                            <div> <Typography
+                                                variant="h6"
+                                                sx={{
+                                                    textAlign: "left",
+                                                    marginBottom: "20px",
+                                                    padding: "5px",
+                                                    backgroundColor: "#3f51b5",
+                                                    color: "#fff",
+                                                    borderRadius: "0px",
+                                                    fontWeight: "bold",
+                                                    fontFamily: "Arial, sans-serif",
+                                                    letterSpacing: "1px",
+                                                }}
+                                            >
+                                                &nbsp;&nbsp;&nbsp;Passenger Details 1
+                                                {(passengerSection === 1) && (
+                                                    <i className="material-icons" onClick={handleDeletePassengerSection} style={{ fontSize: 18, float: 'right', marginRight: 10 }}>delete</i>
+                                                )}
+                                            </Typography>
 
-                                                return (
-                                                    <div key={index}>
-                                                        {currentPassengerSection === passengerSection && (
-                                                            <>
-                                                                <Typography
-                                                                    variant="h6"
-                                                                    sx={{
-                                                                        textAlign: "left",
-                                                                        marginBottom: "20px",
-                                                                        padding: "5px",
-                                                                        backgroundColor: "#3f51b5",
-                                                                        color: "#fff",
-                                                                        borderRadius: "0px",
-                                                                        fontWeight: "bold",
-                                                                        fontFamily: "Arial, sans-serif",
-                                                                        letterSpacing: "1px",
-                                                                    }}
-                                                                >
-                                                                    &nbsp;&nbsp;&nbsp;Passenger Details {index + 1}
-                                                                    {passenger === index + 1 && (
-                                                                        <i
-                                                                            className="material-icons"
-                                                                            onClick={() => setPassenger(passenger - 1)}
-                                                                            style={{ fontSize: 18, float: 'right', marginRight: 10 }}
-                                                                        >
-                                                                            delete
-                                                                        </i>
-                                                                    )}
-                                                                </Typography>
-                                                                <div className="form-test">
-                                                                    <div className="form-group-t" style={{ position: 'relative', display: 'inline-block' }}>
-                                                                        <label>Passenger Staff Id *</label>
+                                                <div className="form-test">
+                                                    <div className="form-group-t" style={{ position: 'relative', display: 'inline-block' }}>
+                                                        <label>Passenger Staff Id *</label>
 
-                                                                        <div style={{ position: 'relative', display: 'inline-block' }}>
-                                                                            <input
-                                                                                type="number" style={{ paddingRight: '50px' }}
-                                                                                className='input-t'
-                                                                                placeholder="eg. 598801"
-                                                                                value={pStaffId1}
-                                                                                onChange={(e) => setPStaffId1(e.target.value)}
-                                                                                required
-                                                                            />
-                                                                            {/* Submit Icon */}
-                                                                            <i
-                                                                                className="material-icons" // FontAwesome icon (or use an image <img src="..."/>)
-                                                                                style={{
-                                                                                    position: 'absolute',
-                                                                                    right: '15px',
-                                                                                    top: '50%',
-                                                                                    fontSize: 18,
-                                                                                    transform: 'translateY(-50%)',
-                                                                                    cursor: 'pointer',
-                                                                                    color: '#888'  // Change the color as per your design
-                                                                                }} onClick={handleEmployeeSearch1}>
-                                                                                send
+                                                        <div style={{ position: 'relative', display: 'inline-block' }}>
+                                                            <input
+                                                                type="number" style={{ paddingRight: '50px' }}
+                                                                className='input-t'
+                                                                placeholder="eg. 598801"
+                                                                value={pStaffId1}
+                                                                onChange={(e) => setPStaffId1(e.target.value)}
+                                                                required
+                                                            />
+                                                            {/* Submit Icon */}
+                                                            <i
+                                                                className="material-icons" // FontAwesome icon (or use an image <img src="..."/>)
+                                                                style={{
+                                                                    position: 'absolute',
+                                                                    right: '15px',
+                                                                    top: '50%',
+                                                                    fontSize: 18,
+                                                                    transform: 'translateY(-50%)',
+                                                                    cursor: 'pointer',
+                                                                    color: '#888'  // Change the color as per your design
+                                                                }} onClick={handleEmployeeSearch1}>
+                                                                send
 
-                                                                            </i>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div className="form-group-t">
-                                                                        <label>Passenger Name *</label>
-                                                                        <input
-                                                                            type="text"
-                                                                            className='input-t'
-                                                                            placeholder="e.g. Shashank Trivedi"
-                                                                            value={pName1}
-                                                                            onChange={(e) => setPName1(e.target.value)}
-                                                                            required
-                                                                            readOnly={!editableFields.name} // Controlled by editableFields
-
-                                                                        />
-                                                                    </div>
-                                                                </div>
-                                                                <div className="form-test">
-                                                                    <div className="form-group-t">
-                                                                        <label>Passenger Mobile No. *</label>
-                                                                        <input
-                                                                            type="text"
-                                                                            className='input-t'
-                                                                            placeholder="e.g. 9999999999"
-                                                                            value={pMob1}
-                                                                            onChange={(e) => setPMob1(e.target.value)}
-                                                                            required
-                                                                        />
-                                                                    </div>
-                                                                    <div className="form-group-t">
-                                                                        <label>Passenger Dept. *</label>
-                                                                        <input
-                                                                            type="text"
-                                                                            className='input-t'
-                                                                            placeholder="e.g. APPS"
-                                                                            value={pDept1}
-                                                                            onChange={(e) => setPDept1(e.target.value)}
-                                                                            required
-                                                                            readOnly={!editableFields.designation}
-                                                                        />
-                                                                    </div>
-                                                                </div>
-                                                            </>
-                                                        )}
+                                                            </i>
+                                                        </div>
                                                     </div>
-                                                );
-                                            })}
-                                        </div>
+                                                    <div className="form-group-t">
+                                                        <label>Passenger Name *</label>
+                                                        <input
+                                                            type="text"
+                                                            className='input-t'
+                                                            placeholder="e.g. Shashank Trivedi"
+                                                            value={pName1}
+                                                            onChange={(e) => setPName1(e.target.value)}
+                                                            required
+                                                            readOnly={!editableFields.name} // Controlled by editableFields
 
-                                        {/* Button Group */}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="form-test">
+                                                    <div className="form-group-t">
+                                                        <label>Passenger Mobile No. *</label>
+                                                        <input
+                                                            type="text"
+                                                            className='input-t'
+                                                            placeholder="e.g. 9999999999"
+                                                            value={pMob1}
+                                                            onChange={(e) => setPMob1(e.target.value)}
+                                                            required
+                                                        />
+                                                    </div>
+                                                    <div className="form-group-t">
+                                                        <label>Passenger Dept. *</label>
+                                                        <input
+                                                            type="text"
+                                                            className='input-t'
+                                                            placeholder="e.g. APPS"
+                                                            value={pDept1}
+                                                            onChange={(e) => setPDept1(e.target.value)}
+                                                            required
+                                                            readOnly={!editableFields.designation}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+                                        )}
+                                        {/* Passenger section Section 2 */}
+
+                                        {(passengerSection >= 2) && (
+                                            <div>
+                                                <Typography
+                                                    variant="h6"
+                                                    sx={{
+                                                        textAlign: "left",
+                                                        marginBottom: "20px",
+                                                        padding: "5px",
+
+                                                        backgroundColor: "#3f51b5",
+                                                        color: "#fff",
+                                                        borderRadius: "0px",
+                                                        fontWeight: "bold",
+                                                        fontFamily: "Arial, sans-serif",
+                                                        letterSpacing: "1px",
+                                                    }}
+                                                >
+                                                    &nbsp;&nbsp;&nbsp;Passenger Details 2
+                                                    {(passengerSection === 2) && (
+                                                        <i className="material-icons" onClick={handleDeletePassengerSection} style={{ fontSize: 18, float: 'right', marginRight: 10 }}>delete</i>
+                                                    )}
+                                                </Typography>
+                                                <div className="form-test">
+                                                    <div className="form-group-t" style={{ position: 'relative', display: 'inline-block' }}>
+                                                        <label>Passenger Staff Id *</label>
+
+                                                        <div style={{ position: 'relative', display: 'inline-block' }}>
+                                                            <input
+                                                                type="number" style={{ paddingRight: '50px' }}
+                                                                className='input-t'
+                                                                placeholder="eg. 598801"
+                                                                value={pStaffId2}
+                                                                onChange={(e) => setPStaffId2(e.target.value)}
+                                                                required
+                                                            />
+                                                            {/* Submit Icon */}
+                                                            <i
+                                                                className="material-icons" // FontAwesome icon (or use an image <img src="..."/>)
+                                                                style={{
+                                                                    position: 'absolute',
+                                                                    right: '15px',
+                                                                    top: '50%',
+                                                                    fontSize: 18,
+                                                                    transform: 'translateY(-50%)',
+                                                                    cursor: 'pointer',
+                                                                    color: '#888'  // Change the color as per your design
+                                                                }} onClick={handleEmployeeSearch2}>
+                                                                send
+
+                                                            </i>
+                                                        </div>
+                                                    </div>
+                                                    <div className="form-group-t">
+                                                        <label>Passenger Name *</label>
+                                                        <input
+                                                            type="text"
+                                                            className='input-t'
+                                                            placeholder="e.g. Shashank Trivedi"
+                                                            value={pName2}
+                                                            onChange={(e) => setPName2(e.target.value)}
+                                                            required
+                                                            readOnly={!editableFields.name} // Controlled by editableFields
+
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="form-test">
+                                                    <div className="form-group-t">
+                                                        <label>Passenger Mobile No. *</label>
+                                                        <input
+                                                            type="text"
+                                                            className='input-t'
+                                                            placeholder="e.g. 9999999999"
+                                                            value={pMob2}
+                                                            onChange={(e) => setPMob2(e.target.value)}
+                                                            required
+                                                        />
+                                                    </div>
+                                                    <div className="form-group-t">
+                                                        <label>Passenger Dept. *</label>
+                                                        <input
+                                                            type="text"
+                                                            className='input-t'
+                                                            placeholder="e.g. APPS"
+                                                            value={pDept2}
+                                                            onChange={(e) => setPDept2(e.target.value)}
+                                                            required
+                                                            readOnly={!editableFields.designation}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+
+
+
                                         <div className="button-group wow fadeIn" data-wow-duration="2s" data-wow-delay="0.4s">
                                             {/* Back Button */}
                                             <button
                                                 type="button"
-                                                id="backButton"
+                                                id='backButton'
                                                 onClick={handlePreviousSection}
                                                 style={{
                                                     backgroundColor: 'white',
@@ -1229,11 +1203,293 @@ const MBookingForm = ({
                                             </button>
 
                                             {/* Submit Button (Disabled) */}
+
+                                            {passengerSection <= 2 ? (
+                                                // Submit Button when passengerSection is 0
+                                                <button
+                                                    type="button"
+                                                    id="submitButton"
+                                                    onClick={handleSubmit}
+                                                    disabled={true}  // Disable the button
+                                                    style={{
+                                                        backgroundColor: '#28a745',   // Official green color
+                                                        border: 'none',               // No border for simplicity
+                                                        color: 'white',               // White text for contrast
+                                                        padding: '10px 20px',
+                                                        borderRadius: '5px',
+                                                        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',  // Slight shadow for emphasis
+                                                        cursor: 'pointer',
+                                                        transition: 'background-color 0.3s ease'
+                                                    }}
+                                                >
+                                                    Submit <i
+                                                        className="material-icons"
+                                                        style={{
+                                                            fontSize: 17,
+                                                            backgroundColor: 'transparent',  // Ensure no background color for the icon
+                                                            color: 'inherit',                 // Inherit text color from the button
+                                                            verticalAlign: 'middle', marginBottom: '1px'
+                                                        }}
+                                                    >task_alt</i>
+                                                </button>
+                                            ) : (
+                                                // Save & Next Button when passengerSection is not 0
+                                                <button
+                                                    type="button"
+                                                    id="saveNextButton"
+                                                    onClick={handleNextSection}
+                                                    style={{
+                                                        backgroundColor: '#F6E871',   // Bold Taxi yellow
+                                                        border: '2px solid #FFD700',
+                                                        color: 'black',               // Black text for strong contrast
+                                                        padding: '10px 20px',
+                                                        borderRadius: '5px',
+                                                        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',  // Slight shadow for emphasis
+                                                        cursor: 'pointer',
+                                                        transition: 'background-color 0.3s ease'
+                                                    }}
+                                                    onMouseOver={(e) => e.target.style.backgroundColor = '#F6E871'}  // Hover for a slightly lighter yellow
+                                                    onMouseOut={(e) => e.target.style.backgroundColor = '#FFD700'}
+                                                >
+                                                    Save & Next <i className="material-icons" style={{ fontSize: 12 }}>send</i>
+                                                </button>
+                                            )}
+
+
+                                        </div>
+                                    </form>
+
+                                )}
+
+
+                                {/* Current section Section 4 */}
+                                {(currentSection === 4) && (
+
+                                    <form>
+                                        {((passengerSection === 3) || (passengerSection === 4)) && (
+                                            <div> <Typography
+                                                variant="h6"
+                                                sx={{
+                                                    textAlign: "left",
+                                                    marginBottom: "20px",
+                                                    padding: "5px",
+
+                                                    backgroundColor: "#3f51b5",
+                                                    color: "#fff",
+                                                    borderRadius: "0px",
+                                                    fontWeight: "bold",
+                                                    fontFamily: "Arial, sans-serif",
+                                                    letterSpacing: "1px",
+                                                }}
+                                            >
+                                                &nbsp;&nbsp;&nbsp;Passenger Details 3
+                                                {(passengerSection === 3) && (
+                                                    <i className="material-icons" onClick={handleDeletePassengerSection} style={{ fontSize: 18, float: 'right', marginRight: 10 }}>delete</i>
+                                                )}
+                                            </Typography>
+                                                <div className="form-test">
+                                                    <div className="form-group-t" style={{ position: 'relative', display: 'inline-block' }}>
+                                                        <label>Passenger Staff Id *</label>
+
+                                                        <div style={{ position: 'relative', display: 'inline-block' }}>
+                                                            <input
+                                                                type="number" style={{ paddingRight: '50px' }}
+                                                                className='input-t'
+                                                                placeholder="eg. 598801"
+                                                                value={pStaffId3}
+                                                                onChange={(e) => setPStaffId3(e.target.value)}
+                                                                required
+                                                            />
+                                                            {/* Submit Icon */}
+                                                            <i
+                                                                className="material-icons" // FontAwesome icon (or use an image <img src="..."/>)
+                                                                style={{
+                                                                    position: 'absolute',
+                                                                    right: '15px',
+                                                                    top: '50%',
+                                                                    fontSize: 18,
+                                                                    transform: 'translateY(-50%)',
+                                                                    cursor: 'pointer',
+                                                                    color: '#888'  // Change the color as per your design
+                                                                }} onClick={handleEmployeeSearch3}>
+                                                                send
+
+                                                            </i>
+                                                        </div>
+                                                    </div>
+                                                    <div className="form-group-t">
+                                                        <label>Passenger Name *</label>
+                                                        <input
+                                                            type="text"
+                                                            className='input-t'
+                                                            placeholder="e.g. Shashank Trivedi"
+                                                            value={pName3}
+                                                            onChange={(e) => setPName3(e.target.value)}
+                                                            required
+                                                            readOnly={!editableFields.name} // Controlled by editableFields
+
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="form-test">
+                                                    <div className="form-group-t">
+                                                        <label>Passenger Mobile No. *</label>
+                                                        <input
+                                                            type="text"
+                                                            className='input-t'
+                                                            placeholder="e.g. 9999999999"
+                                                            value={pMob3}
+                                                            onChange={(e) => setPMob3(e.target.value)}
+                                                            required
+                                                        />
+                                                    </div>
+                                                    <div className="form-group-t">
+                                                        <label>Passenger Dept. *</label>
+                                                        <input
+                                                            type="text"
+                                                            className='input-t'
+                                                            placeholder="e.g. APPS"
+                                                            value={pDept3}
+                                                            onChange={(e) => setPDept3(e.target.value)}
+                                                            required
+                                                            readOnly={!editableFields.designation}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        )}
+                                        {/* Passenger section Section 2 */}
+
+                                        {(passengerSection === 4) && (
+                                            <div>
+                                                <Typography
+                                                    variant="h6"
+                                                    sx={{
+                                                        textAlign: "left",
+                                                        marginBottom: "20px",
+                                                        padding: "5px",
+
+                                                        backgroundColor: "#3f51b5",
+                                                        color: "#fff",
+                                                        borderRadius: "0px",
+                                                        fontWeight: "bold",
+                                                        fontFamily: "Arial, sans-serif",
+                                                        letterSpacing: "1px",
+                                                    }}
+                                                >
+                                                    &nbsp;&nbsp;&nbsp;Passenger Details 4
+                                                    {(passengerSection === 4) && (
+                                                        <i className="material-icons" onClick={handleDeletePassengerSection} style={{ fontSize: 18, float: 'right', marginRight: 10 }}>delete</i>
+                                                    )}
+                                                </Typography>
+                                                <div className="form-test">
+                                                    <div className="form-group-t" style={{ position: 'relative', display: 'inline-block' }}>
+                                                        <label>Passenger Staff Id *</label>
+
+                                                        <div style={{ position: 'relative', display: 'inline-block' }}>
+                                                            <input
+                                                                type="number" style={{ paddingRight: '50px' }}
+                                                                className='input-t'
+                                                                placeholder="eg. 598801"
+                                                                value={pStaffId4}
+                                                                onChange={(e) => setPStaffId4(e.target.value)}
+                                                                required
+                                                            />
+                                                            {/* Submit Icon */}
+                                                            <i
+                                                                className="material-icons" // FontAwesome icon (or use an image <img src="..."/>)
+                                                                style={{
+                                                                    position: 'absolute',
+                                                                    right: '15px',
+                                                                    top: '50%',
+                                                                    fontSize: 18,
+                                                                    transform: 'translateY(-50%)',
+                                                                    cursor: 'pointer',
+                                                                    color: '#888'  // Change the color as per your design
+                                                                }} onClick={handleEmployeeSearch4}>
+                                                                send
+
+                                                            </i>
+                                                        </div>
+                                                    </div>
+                                                    <div className="form-group-t">
+                                                        <label>Passenger Name *</label>
+                                                        <input
+                                                            type="text"
+                                                            className='input-t'
+                                                            placeholder="e.g. Shashank Trivedi"
+                                                            value={pName4}
+                                                            onChange={(e) => setPName4(e.target.value)}
+                                                            required
+                                                            readOnly={!editableFields.name} // Controlled by editableFields
+
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="form-test">
+                                                    <div className="form-group-t">
+                                                        <label>Passenger Mobile No. *</label>
+                                                        <input
+                                                            type="text"
+                                                            className='input-t'
+                                                            placeholder="e.g. 9999999999"
+                                                            value={pMob4}
+                                                            onChange={(e) => setPMob4(e.target.value)}
+                                                            required
+                                                        />
+                                                    </div>
+                                                    <div className="form-group-t">
+                                                        <label>Passenger Dept. *</label>
+                                                        <input
+                                                            type="text"
+                                                            className='input-t'
+                                                            placeholder="e.g. APPS"
+                                                            value={pDept4}
+                                                            onChange={(e) => setPDept4(e.target.value)}
+                                                            required
+                                                            readOnly={!editableFields.designation}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+
+
+
+                                        <div className="button-group wow fadeIn" data-wow-duration="2s" data-wow-delay="0.4s">
+                                            {/* Back Button */}
+                                            <button
+                                                type="button"
+                                                id='backButton'
+                                                onClick={handlePreviousSection}
+                                                style={{
+                                                    backgroundColor: 'white',
+                                                    border: '2px solid #FFD700',  // Taxi yellow border
+                                                    color: '#333',                // Neutral dark gray text
+                                                    padding: '10px 20px',
+                                                    borderRadius: '5px',
+                                                    boxShadow: 'none',
+                                                    cursor: 'pointer',
+                                                    transition: 'background-color 0.3s ease'
+                                                }}
+                                                onMouseOver={(e) => e.target.style.backgroundColor = '#f9f9f9'}
+                                                onMouseOut={(e) => e.target.style.backgroundColor = 'white'}
+                                            >
+                                                <i className="material-icons" style={{ fontSize: 18, verticalAlign: 'middle', marginBottom: '1px' }}>arrow_back</i>
+                                                Back
+                                            </button>
+
+                                            {/* Submit Button (Disabled) */}
+
+
+
                                             <button
                                                 type="button"
                                                 id="submitButton"
                                                 onClick={handleSubmit}
-                                                //   disabled={true}  // Disable the button
+                                                disabled={true}  // Disable the button
                                                 style={{
                                                     backgroundColor: '#28a745',   // Official green color
                                                     border: 'none',               // No border for simplicity
@@ -1255,13 +1511,24 @@ const MBookingForm = ({
                                                     }}
                                                 >task_alt</i>
                                             </button>
+
+
+
                                         </div>
                                     </form>
+
                                 )}
 
 
 
-                                {/* {(currentSection === 3) && (passengers.length === 0) && (
+
+
+
+
+
+
+
+                                {(currentSection === 3) && (passengers.length === 0) && (
                                     <div className="animation-container-form">
                                         <DotLottieReact className='ani'
                                             src="/animations/animation2.lottie"
@@ -1269,7 +1536,7 @@ const MBookingForm = ({
                                             autoplay
                                         />
                                     </div>
-                                )} */}
+                                )}
 
                             </div>
                         </div>
@@ -1277,4 +1544,4 @@ const MBookingForm = ({
     );
 };
 
-export default MBookingForm;
+export default MBookingFormBackup;

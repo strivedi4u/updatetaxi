@@ -98,14 +98,15 @@ const App = () => {
           <Route exact path="/" element={<Home userName={userName} role={role} emplId={emplId} emplName={emplName} profilePhoto={profilePhoto} />} />
           <Route exact path="/gbook" element={<GBooking />} />
           <Route exact path="/mbook" element={<MBooking userName={userName} role={role} emplId={emplId} emplName={emplName} profilePhoto={profilePhoto} desg={desg} mob={mob} comp={comp} approver={approver} costCenter={costCenter} />} />
-          <Route exact path="/vrequest" element={<VRequest />} />
+          <Route exact path="/vrequest" element={<VRequest userName={userName} role={role} emplId={emplId} emplName={emplName} profilePhoto={profilePhoto} desg={desg} mob={mob} comp={comp} approver={approver} costCenter={costCenter} />} />
+          
           <Route exact path="/profile" element={<Profile />} />
           <Route exact path="/api" element={<TaxiRentalSystem />} />
           <Route exact path="/form" element={<Form />} />
           <Route exact path="/request" element={<Request />} />
           <Route exact path="/view" element={<View />} />
           <Route exact path="/view1" element={<View1 />} />
-          <Route exact path="/login" element={<TestLogin setUserName={setUserName} />} />
+          <Route exact path="/login" element={<TestLogin userName={userName} role={role} setUserName={setUserName} />} />
           <Route exact path="/master" element={<MasterLandingPage />} />
           <Route exact path="/masterInputTaxi" element={<MasterInputTaxi />} />
           <Route exact path="/masterInputModel" element={<MasterInputModel />} />

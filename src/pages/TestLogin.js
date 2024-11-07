@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
@@ -10,11 +10,39 @@ import UserProfile from '../components/UserProfile';
 import Preloader from '../components/Preloader';
 import { Login } from '../apis/Login';
 
-function TestLogin({ setUserName }) {
+function TestLogin({ userName, role, setUserName }) {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     var [loginId, setLoginId] = useState();
     var [password, setPassword] = useState();
+
+
+    useEffect(() => {
+        const checkNavigate = async () => {
+            if (!userName || !role) {
+                navigate('/login');
+                // return <Preloader />;
+            }
+            if (role === 'ADMIN') {
+                navigate('/masterScreen');
+            } else if (role === 'SUPERVISOR') {
+                navigate('/');
+            }
+            else if (role === 'USER') {
+                navigate('/');
+            }
+            else if (role === 'Error') {
+                navigate('/login');
+            }
+        };
+
+        checkNavigate();
+    }, [userName, role, navigate]);
+
+
+
+
+
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
@@ -27,7 +55,7 @@ function TestLogin({ setUserName }) {
             if (login != null) {
                 console.log("login HI");
                 setUserName(loginId);
-               
+
                 navigate('/');
                 swal("Good job!", "Successfully saved", "success");
             } else {

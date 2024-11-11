@@ -48,6 +48,7 @@ function TestLogin({ userName, role, setUserName }) {
         e.preventDefault();
         try {
             setLoading(true);
+            console.log(loginId, password);
             const login = await Login(loginId, password);
             console.log("login ", login);
             localStorage.setItem('token', login);

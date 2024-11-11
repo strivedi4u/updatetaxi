@@ -67,6 +67,10 @@ const MBookingForm = ({
 
     //   const [UserName, setUserName] = useState("");
 
+    const [formattedPassengerData, setFormattedPassengerData] = useState(''); // For storing the formatted data
+
+
+
     useEffect(() => {
 
         try {
@@ -79,24 +83,39 @@ const MBookingForm = ({
 
     }, [passenger]);
 
-    const [passengerData, setPassengerData] = useState(
-        Array(passengerSection).fill({
-            pStaffId: "",
-            pName: "",
-            pMob: "",
-            pDept: "",
-        })
-    );
+    // const [passengerData, setPassengerData] = useState(
+    //     Array(passengerSection).fill({
+    //         pStaffId: "",
+    //         pName: "",
+    //         pMob: "",
+    //         pDept: "",
+    //     })
+    // // );
+    // const [passengerSection, setPassengerSection] = useState(Math.ceil(passenger / 2));
+    var [passengerData, setPassengerData] = useState([]);
+    const [pStaffId1, setPStaffId1] = useState("");
+    const [pName1, setPName1] = useState("");
+    const [pMob1, setPMob1] = useState("");
+    const [pDept1, setPDept1] = useState("");
 
-    const handleChange = (index, field, value) => {
-        setPassengerData(prevData =>
-            prevData.map((item, idx) =>
-                idx === index ? { ...item, [field]: value } : item
-            )
-        );
-    };
+    // useEffect(() => {
+    //     setPassengerData(prevData => {
+    //         const newPassengerData = Array.from({ length: passenger }, (_, index) => 
+    //             prevData[index] || { pStaffId: "", pName: "", pMob: "", pDept: "" }
+    //         );
+    //         return newPassengerData;
+    //     });
+    // }, [passenger]);
 
-
+    // useEffect(() => {
+    //     setPassengerSection(Math.ceil(passenger / 2)); // Update the passengerSection based on passenger count
+    //     setPassengerData(Array(passengerSection).fill({
+    //         pStaffId: "",
+    //         pName: "",
+    //         pMob: "",
+    //         pDept: "",
+    //     }));
+    // }, [passenger, passengerSection]);
 
 
 
@@ -150,94 +169,49 @@ const MBookingForm = ({
         fetchData(); // Call the function
     }, [approver], [chooseTaxi]);
 
-    const handleEmployeeSearch1 = async () => {
-        if (pStaffId1 === '000000') {
-            // Update editable fields based on pStaffId1
-            setEditableFields({
-                name: pStaffId1 === '000000',
-                designation: pStaffId1 === '000000',
-            });
-        } else {
-            try {
-                setLoading(true);
-                setEditableFields({
-                    name: false,
-                    designation: false,
-                });
-                const employeeLookup = await getEmployeeLookup(pStaffId1); // Wait for the fetchData to resolve
-                console.log("employeeLookup ", employeeLookup);// Set the data into the state
-                setPName1(decryptData(employeeLookup.Name));
-                setPMob1(decryptData(employeeLookup.MOB_NO));
-                console.log('hi', decryptData(employeeLookup.MOB_NO))
-                console.log(pMob1);
-                setPDept1(decryptData(employeeLookup.Dept));
-            } catch (error) {
-                console.error("Error in useEffect:", error);
-            }
-            finally {
-                setLoading(false); // Stop loading after the API call
-            }
-        }
+     useEffect(() => {
+        setPassengerSection(Math.ceil(passenger / 2));
+        setPassengerData(prevData => {
+            const newPassengerData = Array.from({ length: passenger }, (_, index) => 
+                prevData[index] || { pStaffId: "", pName: "", pMob: "", pDept: "" }
+            );
+            return newPassengerData;
+        });
+    }, [passenger]);
 
-
+    const handleChange = (index, field, value) => {
+        console.log("Onchange event call", index, field, value);
+        setPassengerData(prevData =>
+            prevData.map((item, idx) =>
+                idx === index ? { ...item, [field]: value } : item
+            )
+        );
+        console.log(passengerData);
     };
 
-    const handleEmployeeSearch2 = async () => {
-        if (pStaffId1 === '000000') {
-            // Update editable fields based on pStaffId1
-            setEditableFields({
-                name: pStaffId2 === '000000',
-                designation: pStaffId2 === '000000',
-            });
-        } else {
-            try {
-                setLoading(true);
-                setEditableFields({
-                    name: false,
-                    designation: false,
-                });
-                const employeeLookup = await getEmployeeLookup(pStaffId2); // Wait for the fetchData to resolve
-                console.log("employeeLookup ", employeeLookup);// Set the data into the state
-                setPName2(decryptData(employeeLookup.Name));
-                setPMob2(decryptData(employeeLookup.MOB_NO));
-                console.log('hi', decryptData(employeeLookup.MOB_NO))
-                console.log(pMob2);
-                setPDept2(decryptData(employeeLookup.Dept));
-            } catch (error) {
-                console.error("Error in useEffect:", error);
-            } finally {
-                setLoading(false); // Stop loading after the API call
-            }
-        }
-    };
+    const handleEmployeeSearch = async (index) => {
+        setLoading(true);
+        console.log("index", index);
+        console.log("passenger", passengerData);
+        const pStaffId = passengerData[index].pStaffId;
+        console.log(pStaffId);
+        const employeeLookup = await getEmployeeLookup(pStaffId);
 
-    const handleEmployeeSearch3 = async () => {
-        if (pStaffId3 === '000000') {
-            // Update editable fields based on pStaffId1
-            setEditableFields({
-                name: pStaffId3 === '000000',
-                designation: pStaffId3 === '000000',
-            });
-        } else {
-            try {
-                setLoading(true);
-                setEditableFields({
-                    name: false,
-                    designation: false,
-                });
-                const employeeLookup = await getEmployeeLookup(pStaffId3);
-                console.log("employeeLookup ", employeeLookup);// Set the data into the state
-                setPName3(decryptData(employeeLookup.Name));
-                setPMob3(decryptData(employeeLookup.MOB_NO));
-                console.log('hi', decryptData(employeeLookup.MOB_NO))
-                console.log(pMob3);
-                setPDept3(decryptData(employeeLookup.Dept));
-            } catch (error) {
-                console.error("Error in useEffect:", error);
-            } finally {
-                setLoading(false); // Stop loading after the API call
-            }
+        if (employeeLookup) {
+            setPassengerData(prevData =>
+                prevData.map((item, idx) =>
+                    idx === index
+                        ? {
+                            ...item,
+                            pName: decryptData(employeeLookup.Name),
+                            pMob: decryptData(employeeLookup.MOB_NO),
+                            pDept: decryptData(employeeLookup.Dept),
+                        }
+                        : item
+                )
+            );
         }
+        setLoading(false);
     };
 
 
@@ -289,10 +263,7 @@ const MBookingForm = ({
     // const [atime, setAtime] = useState();
 
     // State for first set
-    const [pStaffId1, setPStaffId1] = useState();
-    const [pName1, setPName1] = useState();
-    const [pMob1, setPMob1] = useState();
-    const [pDept1, setPDept1] = useState();
+
 
     // State for second set
     const [pStaffId2, setPStaffId2] = useState();
@@ -326,6 +297,7 @@ const MBookingForm = ({
 
     // Function to handle adding a new passenger
     const addPassenger = () => {
+        setCurrentSection(3);
         setPassenger(++passenger);
         // if (currentSection != 3 && currentSection != 4) {
         //     setCurrentSection(3);
@@ -452,6 +424,12 @@ const MBookingForm = ({
     };
     const handleSubmit = async () => {
         console.group("Handle Submit button click");
+        const formattedData = passengerData
+        .map(item => `${item.pStaffId}~${item.pName}~${item.pMob}~${item.pDept}`)
+        .join('#') + '#';
+
+    setFormattedPassengerData(formattedData);
+    console.log('Formatted Passenger Data:', formattedData);
         try {
             setLoading(true);
             console.log("updateAction api call");
@@ -478,7 +456,7 @@ const MBookingForm = ({
                 CreatorID,
                 Action,
                 Comments,
-                PassengerDet,
+                formattedPassengerData,
                 poVisit,
                 ExtraBills,
                 BillCatg,
@@ -739,7 +717,7 @@ const MBookingForm = ({
                                                     type="number"
                                                     className='input-t'
                                                     placeholder="e.g. 9999999999"
-                                                    value={mob}
+                                                    defaultValue={mob}
                                                     onChange={(e) => setMobile(e.target.value)}
                                                     required
                                                 />
@@ -1137,13 +1115,13 @@ const MBookingForm = ({
                                                                                 type="number" style={{ paddingRight: '50px' }}
                                                                                 className='input-t'
                                                                                 placeholder="eg. 598801"
-                                                                                value={pStaffId1}
-                                                                                onChange={(e) => setPStaffId1(e.target.value)}
+                                                                                defaultValue={passengerData[index] ? passengerData[index].pStaffId : ""}
+
+                                                                                onChange={(e) => handleChange(index, 'pStaffId', e.target.value)}
                                                                                 required
                                                                             />
-                                                                            {/* Submit Icon */}
                                                                             <i
-                                                                                className="material-icons" // FontAwesome icon (or use an image <img src="..."/>)
+                                                                                className="material-icons"
                                                                                 style={{
                                                                                     position: 'absolute',
                                                                                     right: '15px',
@@ -1151,10 +1129,11 @@ const MBookingForm = ({
                                                                                     fontSize: 18,
                                                                                     transform: 'translateY(-50%)',
                                                                                     cursor: 'pointer',
-                                                                                    color: '#888'  // Change the color as per your design
-                                                                                }} onClick={handleEmployeeSearch1}>
+                                                                                    color: '#888'
+                                                                                }}
+                                                                                onClick={() => handleEmployeeSearch(index)}
+                                                                            >
                                                                                 send
-
                                                                             </i>
                                                                         </div>
                                                                     </div>
@@ -1164,11 +1143,10 @@ const MBookingForm = ({
                                                                             type="text"
                                                                             className='input-t'
                                                                             placeholder="e.g. Shashank Trivedi"
-                                                                            value={pName1}
-                                                                            onChange={(e) => setPName1(e.target.value)}
+                                                                            value={passengerData[index] ? passengerData[index].pName : ""}
+                                                                            onChange={(e) => handleChange(index, 'pName', e.target.value)}
                                                                             required
                                                                             readOnly={!editableFields.name} // Controlled by editableFields
-
                                                                         />
                                                                     </div>
                                                                 </div>
@@ -1179,8 +1157,8 @@ const MBookingForm = ({
                                                                             type="text"
                                                                             className='input-t'
                                                                             placeholder="e.g. 9999999999"
-                                                                            value={pMob1}
-                                                                            onChange={(e) => setPMob1(e.target.value)}
+                                                                            value={passengerData[index] ? passengerData[index].pMob : ""}
+                                                                            onChange={(e) => handleChange(index, 'pMob', e.target.value)}
                                                                             required
                                                                         />
                                                                     </div>
@@ -1190,13 +1168,14 @@ const MBookingForm = ({
                                                                             type="text"
                                                                             className='input-t'
                                                                             placeholder="e.g. APPS"
-                                                                            value={pDept1}
-                                                                            onChange={(e) => setPDept1(e.target.value)}
+                                                                            value={passengerData[index] ? passengerData[index].pDept : ""}
+                                                                            onChange={(e) => handleChange(index, 'pDept', e.target.value)}
                                                                             required
                                                                             readOnly={!editableFields.designation}
                                                                         />
                                                                     </div>
                                                                 </div>
+
                                                             </>
                                                         )}
                                                     </div>

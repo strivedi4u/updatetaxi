@@ -17,14 +17,14 @@ function MBooking({ userName, role, emplId, emplName, profilePhoto, desg, mob, c
     useEffect(() => {
         const checkNavigate = async () => {
             if (role === 'ADMIN') {
-                navigate('/masterScreen');
+              //  navigate('/masterScreen');
             } else if (role === 'SUPERVISOR') {
-                navigate('/mbook');
+               // navigate('/mbook');
             }
             else if (role === 'USER') {
             }
             else if (role === 'Error') {
-                navigate('/login');
+             //   navigate('/login');
             }
         };
 

@@ -6,7 +6,8 @@ import { decryptData } from "../utils/encryption";
 // "LocnCode":"002",
 // "VendorID":"",
 // "UserName":"598801"
-export const getGeneralReport = async () => {
+export const getGeneralReport = async (reqId) => {
+    console.log('reqId', reqId)
   const UserName = localStorage.getItem("UserName");
   const authToken = localStorage.getItem("token");
   const URL = process.env.REACT_APP_API_URL;
@@ -18,7 +19,7 @@ export const getGeneralReport = async () => {
     const response = await axios.post(
       API,
       { Type:"ALL",
-        RequestID:"",
+        RequestID:reqId,
         CompCode:"101",
         Status:"",
         Requestor:"",

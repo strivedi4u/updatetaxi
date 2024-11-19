@@ -15,7 +15,7 @@ const Request = () => {
             try {
                 setLoading(true);
                 console.log("GetGeneralReport api call");
-                const getGeneral = await getGeneralReport(); // Replace with your API URL
+                const getGeneral = await getGeneralReport(''); // Replace with your API URL
                 console.log(getGeneral);
                 setRequestData(getGeneral); // Set the response data to state
             } catch (error) {
@@ -37,8 +37,8 @@ const Request = () => {
     return (
         <div className="main-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
 
+            <div className="container-t" style={{ backgroundColor: 'rgba(251, 246, 246, 0.7)' }}>
 
-            <div className="container-t">
 
                 <div className="filter-section-t">
                     <h3>Sort by</h3>
